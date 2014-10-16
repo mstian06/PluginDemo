@@ -1,0 +1,1 @@
+Android插件框架的一种实现，plugin编译成普通的apk文件，host可以在不安装插件apk的情况下启动插件中的Activity
