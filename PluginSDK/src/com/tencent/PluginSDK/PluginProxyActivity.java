@@ -9,9 +9,15 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
+import android.widget.Toast;
+
 import dalvik.system.DexClassLoader;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by jamie on 14-6-3.
@@ -44,6 +50,96 @@ public class PluginProxyActivity extends Activity {
             mPluginActivity = null;
             e.printStackTrace();
         }
+        
+        // [tms] 测试代码，测试从sd卡load apk调用的情况，打开需要检查路径是否正确。
+//        testToast();
+//        testToast2();
+    }
+    
+    private void testToast() {
+        String path = Environment.getExternalStorageDirectory() + "/";
+        String filename = "TestB.apk";
+        String optimizedDirectory = path + File.separator + "dex_temp"  ;
+        // 核心是这里， 通过getDir来获取一个File对象，然后在获取到getAbsolutePath, 传递给DexClassLoader 即可
+        File file = getDir("dex", 0) ;
+        
+//        String path = Environment.getExternalStorageDirectory() + "/";
+//        String filename = "TestB.apk";
+//        DexClassLoader classLoader = new DexClassLoader(path + filename, path,
+//                null, getClassLoader());
+        
+        DexClassLoader classLoader = new DexClassLoader(path + filename, file.getAbsolutePath(),
+                null, getClassLoader());
+
+        try {
+            Class mLoadClass = classLoader.loadClass("com.example.testb.TestBActivity");
+            Constructor constructor = mLoadClass.getConstructor(new Class[] {});
+            Object TestBActivity = constructor.newInstance(new Object[] {});
+            
+            Method getMoney = mLoadClass.getMethod("getMoney", null);
+            getMoney.setAccessible(true);
+            Object money = getMoney.invoke(TestBActivity, null);
+            Toast.makeText(this, money.toString(), Toast.LENGTH_LONG).show();
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void testToast2() {
+
+        String path = Environment.getExternalStorageDirectory() + "/";
+        String filename = "PluginDemo_1.apk";
+        String optimizedDirectory = path + File.separator + "dex_temp"  ;
+        // 核心是这里， 通过getDir来获取一个File对象，然后在获取到getAbsolutePath, 传递给DexClassLoader 即可
+        File file = getDir("dex", 0) ;
+        
+//        String path = Environment.getExternalStorageDirectory() + "/";
+//        String filename = "TestB.apk";
+//        DexClassLoader classLoader = new DexClassLoader(path + filename, path,
+//                null, getClassLoader());
+        
+        DexClassLoader classLoader = new DexClassLoader(path + filename, file.getAbsolutePath(),
+                null, getClassLoader());
+
+        try {
+            Class mLoadClass = classLoader.loadClass("com.tencent.Plugin1.SubActivity");
+            Constructor constructor = mLoadClass.getConstructor(new Class[] {});
+            Object TestBActivity = constructor.newInstance(new Object[] {});
+            
+            Method getMoney = mLoadClass.getMethod("getMoney", null);
+            getMoney.setAccessible(true);
+            Object money = getMoney.invoke(TestBActivity, null);
+            Toast.makeText(this, money.toString(), Toast.LENGTH_LONG).show();
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    
     }
 
     @Override
@@ -122,6 +218,28 @@ public class PluginProxyActivity extends Activity {
         getIntent().setExtrasClassLoader(classLoader);
         mPluginActivity = (IPluginActivity) mClassLaunchActivity.newInstance();
         mPluginActivity.IInit(mPluginApkFilePath, this, classLoader, packageInfo);
+        
+        // [tms] 测试代码，测试从sd卡路径load apk，打开这段代码需要检查测试路径是否正确。
+//        try {
+//            String path = Environment.getExternalStorageDirectory() + "/";
+//            String filename = "Plugin1.apk";
+//            String optimizedDirectory = path + File.separator + "dex_temp"  ;
+//            // 核心是这里， 通过getDir来获取一个File对象，然后在获取到getAbsolutePath, 传递给DexClassLoader 即可
+//            File file = getDir("dex", 0) ;
+//            DexClassLoader classLoader2 = new DexClassLoader(path + filename, file.getAbsolutePath(),
+//                    null, getClassLoader());
+//            
+//            Class mLoadClass = classLoader2.loadClass("com.tencent.Plugin1.MainActivity");
+//            Constructor constructor = mLoadClass.getConstructor(new Class[] {});
+//            Object TestBActivity = constructor.newInstance(new Object[] {});
+//            
+//            Method getMoney = mLoadClass.getMethod("getMoney", null);
+//            getMoney.setAccessible(true);
+//            Object money = getMoney.invoke(TestBActivity, null);
+//            Toast.makeText(this, money.toString(), Toast.LENGTH_LONG).show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 

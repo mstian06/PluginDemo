@@ -1,6 +1,7 @@
 package com.tencent.PluginSDK;
 
 import android.content.Context;
+import android.os.Environment;
 
 import java.io.*;
 
@@ -26,6 +27,8 @@ public class PluginUtils {
 
     public static File getPluginPath(Context context) {
         return context.getDir(PLUGIN_PATH, Context.MODE_PRIVATE);
+//        String path = Environment.getExternalStorageDirectory() + "/";
+//        return new File(path + PLUGIN_PATH);
     }
 
     public static void installPlugin(Context context, String pluginPath){

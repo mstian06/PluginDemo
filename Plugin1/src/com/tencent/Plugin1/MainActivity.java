@@ -54,6 +54,10 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         doUnbindService();
     }
+    
+    public String getMoney() {
+        return "22222";
+    }
 
     private void initView() {
         findViewById(R.id.button1).setOnClickListener(mOnClickListener);
