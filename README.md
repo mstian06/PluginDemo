@@ -68,17 +68,10 @@ Try to modify your code so that A.apk does not use gson.jar –  Richard Le Jun 
 
 参考资料
 ---
-```
 农民伯伯
-Android动态加载jar/dex
-http://www.cnblogs.com/over140/archive/2011/11/23/2259367.html
-Android应用开发提高系列（4）——Android动态加载（上）——加载未安装APK中的类
-http://www.cnblogs.com/over140/archive/2012/03/29/2423116.html
-android DexClassLoader动态加载技术详解
-http://www.2cto.com/kf/201408/327363.html
-Android App 如何动态加载类
-http://blog.csdn.net/quaful/article/details/6096951 
-基于Proxy思想的Android插件框架
-http://www.tuicool.com/articles/mUZ3qq
-代码： https://github.com/mstian06/PluginDemo[原作者Jamie的github上代码已删，这是从其他地方clone的]
-```
+* [Android动态加载jar/dex](http://www.cnblogs.com/over140/archive/2011/11/23/2259367.html)</p>
+* [Android应用开发提高系列（4）——Android动态加载（上）——加载未安装APK中的类](http://www.cnblogs.com/over140/archive/2012/03/29/2423116.html)</p>
+* [android DexClassLoader动态加载技术详解](http://www.2cto.com/kf/201408/327363.html)
+* [Android App 如何动态加载类](http://blog.csdn.net/quaful/article/details/6096951 )</p>
+* [基于Proxy思想的Android插件框架](http://www.tuicool.com/articles/mUZ3qq)</p>
+参考代码[代码](https://github.com/mstian06/PluginDemo)[原作者Jamie的github上代码已删，这是从其他地方clone的]
